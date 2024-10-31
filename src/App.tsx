@@ -1,11 +1,11 @@
-
+import Column from "./Column"
+import {AppContainer} from "./styles"
 
 function App() {
-
   return (
-    <>
-      <h1>Hello world</h1>
-    </>
+    <AppContainer>
+      <Column text="Todo: "/>
+    </AppContainer>
   )
 }
 
