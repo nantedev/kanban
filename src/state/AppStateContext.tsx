@@ -1,20 +1,6 @@
 import { createContext, ReactNode, useContext} from "react";
+import { AppState, List, Task } from "./AppStateReducer";
 
-
-type Task = {
-    id: string,
-    text: string,
-} 
-
-type List = {
-    id: string,
-    text: string,
-    tasks: Task[],
-}
-
-export type AppState = {
-    lists: List[],
-}
 
 type AppStateContextType = {
     lists: List[]
