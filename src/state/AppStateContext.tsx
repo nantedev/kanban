@@ -1,10 +1,12 @@
-import { createContext, ReactNode, useContext} from "react";
-import { AppState, List, Task } from "./AppStateReducer";
-
+import { createContext, ReactNode, useContext, Dispatch} from "react";
+import { AppState, List, Task, appStateReducer } from "./AppStateReducer";
+import { Action } from "./action";
+import { useImmerReducer } from "use-immer";
 
 type AppStateContextType = {
     lists: List[]
     getTasksByListId(id: string): Task[]
+    dispatch: Dispatch<Action>
   }
 
 type AppStateProviderType = {
@@ -42,21 +44,21 @@ const appData: AppState = {
 
 
      //Defining the Context Provider
-export const AppStateProvider = ({ children }: AppStateProviderType) => {
-           const { lists } = appData
-        
+  export const AppStateProvider = ({ children }: AppStateProviderType) => {
+           const [state, dispatch] = useImmerReducer(appStateReducer, appData)
+          const {lists} = state
            const getTasksByListId = (id: string) => {
              return lists.find((list) => list.id === id)?.tasks || []
            }
        
            return (
-             <AppStateContext.Provider value={{ lists, getTasksByListId }}>
+             <AppStateContext.Provider value={{ lists, getTasksByListId, dispatch }}>
                {children}
              </AppStateContext.Provider>
            )
          }
 
     //useContext (custom) hook
-export const useAppState = () => {
+  export const useAppState = () => {
         return useContext(AppStateContext)
     }
