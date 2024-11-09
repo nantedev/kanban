@@ -1,24 +1,24 @@
 import { nanoid } from "nanoid"
 import { findItemIndexById } from "../utils/arrayUtils"
-import { Action } from "./action"
+import { ActionType } from "./action"
 
 
-export type Task = {
+export type TaskType = {
     id: string
     text: string
 } 
 
-export type List = {
+export type ListType = {
     id: string
     text: string
-    tasks: Task[]
+    tasks: TaskType[]
 }
 
-export type AppState = {
-    lists: List[]
+export type AppStateType = {
+    lists: ListType[]
 }
 
-export const appStateReducer = (draft: AppState, action: Action): AppState | void => {
+export const appStateReducer = (draft: AppStateType, action: ActionType): AppStateType | void => {
     switch (action.type) { 
         case "ADD_LIST": {
             draft.lists.push({
