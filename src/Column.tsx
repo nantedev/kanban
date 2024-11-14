@@ -4,12 +4,12 @@ import { addTask } from './state/action';
 import { useAppState } from './state/AppStateContext';
 import { ColumnContainer, ColumnTitle } from './styles'
 
-type ColumnType = {
+type ColumnProps = {
     text: string
     id: string
 }
 
-export default function Column({text, id}: ColumnType) {
+export default function Column({text, id}: ColumnProps) {
   const {getTasksByListId, dispatch} = useAppState()
   const tasks = getTasksByListId(id) || []
 
