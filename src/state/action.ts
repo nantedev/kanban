@@ -1,3 +1,7 @@
+import { DragItem } from "../DragItem"
+
+
+//Action union Type
 export type ActionType =
   | {
       type: "ADD_LIST"
@@ -10,10 +14,15 @@ export type ActionType =
   | {
       type: "MOVE_LIST"
       payload: {
-        draggedId: string
-        hoverId: string
+      draggedId: string
+      hoverId: string
     }
   }
+     | {
+       type: "SET_DRAGGED_ITEM"
+       payload: DragItem | null
+     }
+    
 
   //Action Creator 
 
@@ -41,4 +50,9 @@ export const moveList = (
         }
         })
 
-    
+export const setDraggedItem = (
+        draggedItem: DragItem | null
+      ): ActionType => ({
+        type: "SET_DRAGGED_ITEM",
+        payload: draggedItem
+      })

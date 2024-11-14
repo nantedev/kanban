@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid"
 import { findItemIndexById, moveItem } from "../utils/arrayUtils"
 import { ActionType } from "./action"
-
+import { DragItem } from "../DragItem"
 
 export type TaskType = {
     id: string
@@ -16,6 +16,7 @@ export type ListType = {
 
 export type AppStateType = {
     lists: ListType[]
+    draggedItem: DragItem | null
 }
 
 export const appStateReducer = (draft: AppStateType, action: ActionType): AppStateType | void => {
@@ -43,6 +44,10 @@ export const appStateReducer = (draft: AppStateType, action: ActionType): AppSta
             const hoverIndex = findItemIndexById(draft.lists, hoverId)
             draft.lists = moveItem(draft.lists, dragIndex, hoverIndex)
             break
-    }
+        }
+        case "SET_DRAGGED_ITEM": {
+            draft.draggedItem = action.payload
+            break
+        }
     }
 }
