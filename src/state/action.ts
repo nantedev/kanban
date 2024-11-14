@@ -7,6 +7,15 @@ export type ActionType =
       type: "ADD_TASK"
       payload: { text: string; listId: string }
     }
+  | {
+      type: "MOVE_LIST"
+      payload: {
+        draggedId: string
+        hoverId: string
+    }
+  }
+
+  //Action Creator 
 
 export const addList = (text: string): ActionType => ({
       type: "ADD_LIST",
@@ -21,6 +30,15 @@ export const addTask = (text: string, listId: string): ActionType => ({
       }
     })
 
-
+export const moveList = (
+        draggedId: string,
+        hoverId: string
+      ): ActionType => ({
+        type: "MOVE_LIST",
+        payload: {
+          draggedId,
+          hoverId
+        }
+        })
 
     
