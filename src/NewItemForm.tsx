@@ -2,11 +2,11 @@ import { useState } from "react"
 import { NewItemFormContainer, NewItemButton, NewItemInput} from "./styles"
 import { useFocus } from "./hook/useFocus";
 
-type NewItemFormType = {
+type NewItemFormProps = {
     onAdd(text: string): void;
 }
 
-export const NewItemForm = ({ onAdd }: NewItemFormType) => {
+export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
     const [text, setText] = useState("")
     const inputRef = useFocus() 
 

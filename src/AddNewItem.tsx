@@ -2,13 +2,13 @@ import { useState } from "react"
 import { AddItemButton } from "./styles"
 import { NewItemForm } from "./NewItemForm"
 
-type AddNewItemType = {
+type AddNewItemProps = {
     onAdd(text: string): void
     toggleButtonText: string
     dark?: boolean
 }
 
-export const AddNewItem = (props: AddNewItemType) => {
+export const AddNewItem = (props: AddNewItemProps) => {
    const [showForm, setShowForm] = useState(false)
    const {onAdd, toggleButtonText, dark} = props
     

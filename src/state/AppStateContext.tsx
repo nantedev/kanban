@@ -2,19 +2,22 @@ import { createContext, ReactNode, useContext, Dispatch} from "react";
 import { AppStateType, ListType, TaskType, appStateReducer } from "./AppStateReducer";
 import { ActionType } from "./action";
 import { useImmerReducer } from "use-immer";
+import { DragItem } from "../DragItem";
 
-type AppStateContextType = {
+type AppStateContextProps = {
+    draggedItem: DragItem | null
     lists: ListType[]
     getTasksByListId(id: string): TaskType[]
     dispatch: Dispatch<ActionType>
   }
 
-type AppStateProviderType = {
+type AppStateProviderProps = {
      children: ReactNode
  }
 
     //Data
 const appData: AppStateType = {
+  draggedItem: null,
    lists: [
      {
        id: "0",
@@ -37,24 +40,24 @@ const appData: AppStateType = {
 
 
 
-    //Operator to make TypeScript think that our empty object actually has AppStateContextType type
-    const AppStateContext = createContext<AppStateContextType>(
-       {} as AppStateContextType
+    //Operator to make TypeScript think that our empty object actually has AppStateContextProps type
+    const AppStateContext = createContext<AppStateContextProps>(
+       {} as AppStateContextProps
     )
 
 
      //Defining the Context Provider
-  export const AppStateProvider = ({ children }: AppStateProviderType) => {
+  export const AppStateProvider = ({ children }: AppStateProviderProps) => {
           
           const [state, dispatch] = useImmerReducer(appStateReducer, appData)
-          const {lists} = state
+          const {draggedItem, lists} = state
       
           const getTasksByListId = (id: string) => {
              return lists.find((list) => list.id === id)?.tasks || []
            }
        
            return (
-             <AppStateContext.Provider value={{ lists, getTasksByListId, dispatch }}>
+             <AppStateContext.Provider value={{draggedItem, lists, getTasksByListId, dispatch }}>
                {children}
              </AppStateContext.Provider>
            )
