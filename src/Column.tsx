@@ -5,7 +5,7 @@ import { useAppState } from './state/AppStateContext';
 import { ColumnContainer, ColumnTitle } from './styles'
 import { useItemDrag } from './hook/useItemDrag';
 import { useDrop } from "react-dnd"
-import { moveList, addTask } from "./state/action"
+import { moveList, addTask, moveTask, setDraggedItem } from "./state/action"
 import { throttle } from "throttle-debounce-ts"
 import { isHidden } from "./utils/isHidden"
 
@@ -23,7 +23,7 @@ export default function Column({text, id, isPreview}: ColumnProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { drag } = useItemDrag({ type: "COLUMN", id, text })
   const [, drop] = useDrop({
-         accept: "COLUMN",
+         accept: ["COLUMN", "CARD"],
          hover: throttle(200, () => {
            if (!draggedItem) {
              return
@@ -32,10 +32,21 @@ export default function Column({text, id, isPreview}: ColumnProps) {
              if (draggedItem.id === id) {
               return
             }
-    
             dispatch(moveList(draggedItem.id, id))
+            } else {
+              if (draggedItem.columnId === id) {
+                  return
+                }
+              if (tasks.length) {
+                  return
+            }
+              dispatch(moveTask(draggedItem.id, null, draggedItem.columnId, id))
+              dispatch(setDraggedItem({ ...draggedItem, columnId: id}))
+                 
           }
-        })
+          
+          }
+        )
       })
     drag(drop(ref))
     return(
