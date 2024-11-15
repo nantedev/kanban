@@ -45,7 +45,11 @@ export default function Column({text, id, isPreview}: ColumnProps) {
      isHidden={isHidden(draggedItem, "COLUMN", id, isPreview)}>
        <ColumnTitle>{text}</ColumnTitle>
        {tasks.map((task) => (
-        <Card text={task.text} key={task.id} id={task.id}/>
+        <Card 
+        columnId={id}
+        text={task.text} 
+        key={task.id} 
+        id={task.id}/>
        ))}
       <AddNewItem
          toggleButtonText="+ Add another card"

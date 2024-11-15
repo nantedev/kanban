@@ -18,11 +18,19 @@ export type ActionType =
       hoverId: string
     }
   }
-     | {
+  | {
        type: "SET_DRAGGED_ITEM"
        payload: DragItem | null
+  }
+  | {
+        type: "MOVE_TASK"
+        payload: {
+          draggedItemId: string
+          hoveredItemId: string | null
+          sourceColumnId: string
+          targetColumnId: string
      }
-    
+   }
 
   //Action Creator 
 
@@ -56,3 +64,18 @@ export const setDraggedItem = (
         type: "SET_DRAGGED_ITEM",
         payload: draggedItem
       })
+
+export const moveTask = (
+       draggedItemId: string,
+       hoveredItemId: string | null,
+       sourceColumnId: string,
+       targetColumnId: string
+     ): ActionType => ({
+       type: "MOVE_TASK",
+       payload: {
+         draggedItemId,
+           hoveredItemId,
+           sourceColumnId,
+           targetColumnId
+         }
+       })
